@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Atención de Tickets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .btn-atender {
+            background-color: #2ecc71;
+        }
+        .btn-atender:hover {
+            background-color: #27ae60;
+        }
+        .flex-container {
+            display: flex;
+            gap: 20px;
+        }
+        .col {
+            flex: 1;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #eef2f5;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-left: 5px solid #3498db;
+            border-radius: 4px;
+        }
+        .prioritaria-item {
+            border-left-color: #e74c3c;
+            background: #fdf2f2;
+        }
+        .stats {
+            background: #e8f8f5;
+            border-left: 5px solid #1abc9c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sistema de Atención de Tickets de Soporte</h1>
+
+    <!-- FORMULARIO: 1) Registrar Ticket -->
+    <div class="card">
+        <h2>1) Registrar Nuevo Ticket</h2>
+        <form id="formTicket">
+            <div class="form-group">
+                <label for="cliente">Nombre del Cliente:</label>
+                <input type="text" id="cliente" required placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="form-group">
+                <label for="problema">Tipo de Problema (Descripción breve):</label>
+                <input type="text" id="problema" required placeholder="Ej: Error al iniciar sesión">
+            </div>
+            <div class="form-group">
+                <label for="prioridad">Prioridad:</label>
+                <select id="prioridad">
+                    <option value="Prioritaria">Prioritaria</option>
+                    <option value="Normal">Normal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tiempo">Tiempo Estimado (minutos):</label>
+                <input type="number" id="tiempo" required min="1" placeholder="Ej: 15">
+            </div>
+            <button type="submit">Registrar Ticket</button>
+        </form>
+    </div>
+
+    <!-- ACCIONES: 2) Atender, 3) Consultar -->
+    <div class="card">
+        <h2>Acciones de Atención</h2>
+        <div class="flex-container">
+            <button class="btn-atender" onclick="atenderSiguienteTicket()">2) Atender Siguiente Ticket</button>
+            <button onclick="consultarSiguienteTicket()">3) Consultar Siguiente Ticket</button>
+        </div>
+        <div id="resultadoAtencion" style="margin-top: 15px; font-weight: bold;"></div>
+    </div>
+
+    <!-- 4) Mostrar Filas -->
+    <div class="card">
+        <h2>4) Estado Actual de las Filas (FIFO)</h2>
+        <div class="flex-container">
+            <div class="col">
+                <h3>Fila Prioritaria</h3>
+                <ul id="listaPrioritaria"></ul>
+            </div>
+            <div class="col">
+                <h3>Fila Normal</h3>
+                <ul id="listaNormal"></ul>
+            </div>
+        </div>
+    </div>
